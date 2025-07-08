@@ -1,0 +1,92 @@
+# 🛍️ Product CRUD API – ASP.NET Core Web API
+
+This is a simple **Product Management API** built with **ASP.NET Core Web API**, following clean architecture and **SOLID principles**.
+
+It demonstrates:
+- Layered architecture (Controller → Service → Repository)
+- Interface-based design and Dependency Injection
+- In-memory data storage for simplicity (can be extended to real DBs)
+- DTOs for data validation and separation of concerns
+- Model validation using Data Annotations
+- Swagger UI integration
+
+---
+
+## 📦 Features
+
+- ✅ Get all products
+- 🔍 Get product by ID
+- ➕ Add a new product
+- ✏️ Update an existing product
+- ❌ Delete a product
+
+---
+
+## 🧱 Project Structure
+
+ProductApi/
+├── Controllers/
+│ └── ProductsController.cs
+├── DTOs/
+│ └── ProductDto.cs
+├── Interfaces/
+│ ├── IProductService.cs
+│ └── IProductRepository.cs
+├── Models/
+│ └── Product.cs
+├── Repositories/
+│ └── InMemoryProductRepository.cs
+├── Services/
+│ └── ProductService.cs
+└── Program.cs
+
+
+### Prerequisites
+
+- [.NET 6 SDK](https://dotnet.microsoft.com/en-us/download)
+- IDE like **Visual Studio** or **VS Code**
+
+### Run the Project
+dotnet run
+Then navigate to:
+https://localhost:<port>/swagger
+to explore the API using Swagger UI.
+
+🔄 Endpoints
+Method	Endpoint	Description
+GET	/api/products	Get all products
+GET	/api/products/{id}	Get product by ID
+POST	/api/products	Create a new product
+PUT	/api/products/{id}	Update a product
+DELETE	/api/products/{id}	Delete a product
+
+Sample Product DTO:
+
+json
+{
+  "name": "Keyboard",
+  "price": 1200
+}
+
+🧠 SOLID Principles Used
+S – Single Responsibility: Separate layers for logic, data access, and transport.
+O – Open/Closed: Easily switch repository implementations.
+L – Liskov Substitution: Interfaces allow interchangeable implementations.
+I – Interface Segregation: Interfaces contain only what’s necessary.
+D – Dependency Inversion: Layers depend on abstractions via DI.
+
+📂 Technologies
+ASP.NET Core 6
+Swagger (Swashbuckle)
+Data Annotations
+In-Memory Repository (can be swapped with EF Core, MongoDB, etc.)
+
+✅ Next Steps
+Add database support using Entity Framework Core
+Add unit testing with xUnit or Moq
+Implement pagination & filtering
+Add authentication/authorization
+
+🙌 Author
+Anitha Aasadi
+.NET Full Stack Developer 
