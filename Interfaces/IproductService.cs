@@ -6,7 +6,8 @@ namespace CRUD.Interfaces
     // Interfaces/IProductService.cs
     public interface IProductService
     {
-        IEnumerable<Product> GetAll();
+        IEnumerable<ProductDto> GetAll();
+       // Category GetCategoryById(int id);
         Product GetById(int id);
         Product Create(ProductDto dto);
         bool Update(int id, ProductDto dto);

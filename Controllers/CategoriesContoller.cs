@@ -1,4 +1,4 @@
-using CRUD.DTO;
+﻿using CRUD.DTO;
 using CRUD.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,11 +6,11 @@ namespace CRUD.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProductsController : ControllerBase
+    public class CategoriesController : ControllerBase
     {
-        private readonly IProductService _service;
+        private readonly ICategoryService _service;
 
-        public ProductsController(IProductService service)
+        public CategoriesController(ICategoryService service)
         {
             _service = service;
         }
@@ -21,20 +21,20 @@ namespace CRUD.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var product = _service.GetById(id);
-            return product == null ? NotFound() : Ok(product);
+            var category = _service.GetCategoryById(id);
+            return category == null ? NotFound() : Ok(category);
         }
 
         [HttpPost]
-        public IActionResult Create(ProductDto dto)
+        public IActionResult Create(CategoryDto dto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            var product = _service.Create(dto);
-            return CreatedAtAction(nameof(Get), new { id = product.Id }, product);
+            var category = _service.Create(dto);
+            return CreatedAtAction(nameof(Get), new { id = category.Id }, category);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, ProductDto dto)
+        public IActionResult Update(int id, CategoryDto dto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             return _service.Update(id, dto) ? NoContent() : NotFound();
