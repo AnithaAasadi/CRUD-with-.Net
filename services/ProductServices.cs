@@ -1,7 +1,7 @@
 ﻿using CRUD.DTO;
 using CRUD.Interfaces;
 using CRUD.Models;
-
+using System.Web.Mvc;
 namespace CRUD.services
 {
     public class ProductService : IProductService
@@ -33,27 +33,28 @@ namespace CRUD.services
 
 
 
-        public Product GetById(int id) => _repo.GetById(id);
+        public Product GetByIdAsync(int id) =>  _repo.GetByIdAsync(id);
 
         public Product Create(ProductDto dto)
         {
-            var category = _repo1.GetCategoryById(dto.CategoryId);
+
+
+            var category =  _repo1.GetCategoryById(dto.CategoryId);
             if (category == null)
-                throw new Exception("Invalid CategoryId");
+                throw new ArgumentException(" CategoryId doesnt exist");
 
             var product = new Product
             {
-               
                 Name = dto.Name,
                 Price = dto.Price,
-                CategoryId = dto.CategoryId,
-                Category = category
+                CategoryId = dto.CategoryId
             };
+           
 
             _repo.Add(product);
 
             // Fix: Return the created Product instead of ProductDto
-            
+           
             return new Product
             {
                 

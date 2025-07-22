@@ -26,7 +26,7 @@ namespace CRUD.services
         }
        
 
-        public Category GetCategoryById(int id) => _repo.GetCategoryById(id);
+        public Category  GetCategoryById(int id) =>  _repo.GetCategoryById(id);
 
         public Category Create(CategoryDto dto)
         {

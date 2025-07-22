@@ -1,4 +1,5 @@
 ﻿using CRUD.DBContext;
+using CRUD.DTO;
 using CRUD.Interfaces;
 using CRUD.Models;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,7 @@ namespace CRUD.Repositories
 
         public IEnumerable<Product> GetAll() => _context.Products.Include(p=>p.Category).ToList();
 
-        public Product GetById(int id) => _context.Products.Find(id);
+        public  Product GetByIdAsync(int id) => _context.Products.Find(id);
         public Category GetCategoryById(int id)
         {
             return _context.Categories.Find(id);

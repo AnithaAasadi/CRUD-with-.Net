@@ -22,7 +22,7 @@ namespace CRUD.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+      //  [Authorize (Roles ="Admin")]
 
         public IActionResult GetAll() => Ok(_service.GetAll());
 
@@ -32,21 +32,41 @@ namespace CRUD.Controllers
             var username = User.Identity?.Name;
             var role = User.FindFirst(ClaimTypes.Role)?.Value;
             Console.WriteLine(role, username);
-            var product = _service.GetById(id);
+            var product = _service.GetByIdAsync(id);
 
             return product == null ? NotFound() : Ok(product);
         }
 
-       
+
         [HttpPost]
-      [Authorize(Roles = "Admin")]
+        //  [Authorize(Roles = "Admin")]
         public IActionResult Create(ProductDto dto)
         {
-           
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            var product = _service.Create(dto);
-            return CreatedAtAction(nameof(Get), new { id = product.Id }, product);
-            
+            try
+            {
+                var product = _service.Create(dto);
+                // return CreatedAtAction(nameof(Get), new { id = product.Id }, product);
+                return Ok(new
+                {
+                    message = "Product created",
+                    data = new
+                    {
+                        Name = product.Name,
+                        Price = product.Price,
+                        CategoryId = product.CategoryId
+                    }
+                });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });  
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An unexpected error occurred", details = ex.Message });
+            }
+
         }
 
         [HttpPut("{id}")]

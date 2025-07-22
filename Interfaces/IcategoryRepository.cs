@@ -5,7 +5,7 @@ namespace CRUD.Interfaces
     public interface ICategoryRepository
     {
         IEnumerable<Category> GetAll();
-        Category GetCategoryById(int id);
+       Category GetCategoryById(int id);
        // Category GetById(int id);
         void Add(Category category);
         void Update(Category category);
