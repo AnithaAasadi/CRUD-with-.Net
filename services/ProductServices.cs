@@ -1,18 +1,19 @@
-﻿using CRUD.DTO;
+﻿using AutoMapper;
+using CRUD.DTO;
 using CRUD.Interfaces;
 using CRUD.Models;
-using System.Web.Mvc;
 namespace CRUD.services
 {
     public class ProductService : IProductService
     {
         private readonly IProductRepository _repo;
         private readonly ICategoryRepository _repo1;
-
-        public ProductService(IProductRepository repo, ICategoryRepository repo1)
+        private readonly IMapper _mapper;
+        public ProductService(IProductRepository repo, ICategoryRepository repo1, IMapper mapper)
         {
             _repo = repo;
             _repo1 = repo1;
+            _mapper = mapper;
         }
        
 
@@ -20,22 +21,23 @@ namespace CRUD.services
         public IEnumerable<ProductDto> GetAll()
         {
             var products = _repo.GetAll(); // Now includes Category
+            return _mapper.Map<IEnumerable<ProductDto>>(products);
 
-            return products.Select(p => new ProductDto
-            {
-              
-                Name = p.Name,
-                Price = p.Price,
-                CategoryId = p.CategoryId,
-                CategoryName = p.Category?.Name 
-            });
+            /* return products.Select(p => new ProductDto
+             {
+
+                 Name = p.Name,
+                 Price = p.Price,
+                 CategoryId = p.CategoryId,
+                 CategoryName = p.Category?.Name 
+             });*/
         }
 
 
 
         public Product GetByIdAsync(int id) =>  _repo.GetByIdAsync(id);
 
-        public Product Create(ProductDto dto)
+        public ProductDto Create(ProductDto dto)
         {
 
 
@@ -43,7 +45,7 @@ namespace CRUD.services
             if (category == null)
                 throw new ArgumentException(" CategoryId doesnt exist");
 
-            var product = new Product
+          /*  var product = new Product
             {
                 Name = dto.Name,
                 Price = dto.Price,
@@ -62,6 +64,10 @@ namespace CRUD.services
                 Price = product.Price,
                 CategoryId = product.CategoryId
             };
+        } */
+            var product = _mapper.Map<Product>(dto);
+            _repo.Add(product);
+            return _mapper.Map<ProductDto>(product);
         }
 
 

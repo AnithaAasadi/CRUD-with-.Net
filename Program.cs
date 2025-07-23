@@ -2,6 +2,7 @@ using CRUD.DBContext;
 using CRUD.DTO;
 using CRUD.Interfaces;
 using CRUD.Middlewares;
+using CRUD.Profiles;
 using CRUD.Repositories;
 using CRUD.services;
 using CRUD.Validators;
@@ -53,7 +54,8 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICategoryRepository, EfCategoryRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IValidator<ProductDto>, ProductDtoValidator>();
-
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddDbContext<ProductDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))

@@ -29,9 +29,7 @@ namespace CRUD.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var username = User.Identity?.Name;
-            var role = User.FindFirst(ClaimTypes.Role)?.Value;
-            Console.WriteLine(role, username);
+           
             var product = _service.GetByIdAsync(id);
 
             return product == null ? NotFound() : Ok(product);

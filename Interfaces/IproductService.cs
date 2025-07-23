@@ -9,7 +9,7 @@ namespace CRUD.Interfaces
         IEnumerable<ProductDto> GetAll();
        // Category GetCategoryById(int id);
         Product GetByIdAsync(int id);
-        Product Create(ProductDto dto);
+        ProductDto Create(ProductDto dto);
         bool Update(int id, ProductDto dto);
 
         bool Delete(int id);
