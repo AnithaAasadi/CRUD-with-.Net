@@ -23,7 +23,7 @@ namespace CRUD.services
 
             return products.Select(p => new ProductDto
             {
-               
+              
                 Name = p.Name,
                 Price = p.Price,
                 CategoryId = p.CategoryId,
